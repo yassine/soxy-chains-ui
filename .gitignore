@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+yarn.lock
+node_modules/
+.scannerwork/
+*.private-overrides.*
+package-lock.json
+yarn-error.log
+reports/

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ES2015",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "jsx": "react",
+    "target": "ES6",
+    "rootDirs": ["src/scripts/ui", "src/scripts/app", "src", "build/loader"],
+    "strictNullChecks": false,
+    "allowJs": true,
+    "experimentalDecorators":true,
+    "paths": {
+      //vendor
+      "jasmine-enzyme": ["node_modules/@types/jasmine-enzyme/index.d.ts"],
+      "enzyme-adapter-react-16":["node_modules/@types/enzyme-adapter-react-16/index.d.ts"]
+    }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
