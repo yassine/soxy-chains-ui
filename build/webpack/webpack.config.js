@@ -5,40 +5,34 @@ import webpack from 'webpack';
 const entries = {};
 entries[config.mainBundleName] = 'scripts/Main.tsx';
 
-const typescriptLoaders = [
-  {
-    loader: 'babel-loader'
-  },
-  {
-    loader: 'ts-loader',
-    options:{
-      transpileOnly:true
+function typeScriptLoadersProvider(){
+  return [
+    {
+      loader: 'babel-loader'
+    },
+    {
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true
+      }
     }
-  },
-  {
-    loader:'tslint-loader',
-    options:{
-      configFile: path.join(config.checkStylePath, 'tslint.config.json')
+  ];
+}
+
+function javaScriptLoadersProvider(){
+  return [
+    {
+      loader: 'babel-loader'
     }
-  }
-];
-const jsLoaders = [
-  {
-    loader  : 'babel-loader'
-  },
-  {
-    loader  : 'eslint-loader',
-    options : {
-      configFile: path.join(config.checkStylePath, 'eslint.config.json')
-    }
-  }
-];
+  ];
+}
 
 export function WebpackConfigProvider() {
   return {
     context : config.srcPath,
     devtool : 'source-map',
     entry   : entries,
+    mode    : 'development',
     output  : {
       filename      : '[name].bundle.js',
       chunkFilename : '[name].[chunkhash].chunk.js',
@@ -47,43 +41,20 @@ export function WebpackConfigProvider() {
     },
     module: {
       rules : [
+
         {
           test    : /\.ts(x?)$/,
-          exclude : /(node_modules|\.spec\.ts(x?)$)/,
-          use     : typescriptLoaders.concat([{
-            loader: 'istanbul-instrumenter-loader',
-            options:{
-              enforce: 'post',
-              esModules: true
-            }
-          }])
-        },
-        {
-          test    : /\.ts(x?)$/,
+          include : config.srcPath,
           exclude : [/(node_modules)/],
-          use     : typescriptLoaders.slice()
+          use     : typeScriptLoadersProvider().slice()
         },
         {
           test    : /\.js(x?)$/,
-          exclude: /(node_modules|\.spec\.js(x?)$)/,
-          use     : jsLoaders.concat([{
-            loader: 'istanbul-instrumenter-loader',
-            options:{
-              enforce: 'post',
-              esModules: true
-            }
-          }])
-        },
-        {
-          test    : /\.js(x?)$/,
+          include : config.srcPath,
           exclude : [/(node_modules)/],
-          use     : jsLoaders
+          use     : javaScriptLoadersProvider()
         }
       ]
-    },
-    devServer: {
-      inline: true,
-      keepalive: false
     },
     plugins: [
       new webpack.ProvidePlugin({

@@ -3,8 +3,9 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import path from 'path';
 import { WebpackConfigProvider } from 'webpack/webpack.config';
 import { WithStylesConfiguration } from 'webpack/styles.config';
+import { WithInstrumentation } from 'webpack/istanbul.config';
 
-const webpackConfiguration = Object.assign({}, WithStylesConfiguration(WebpackConfigProvider()), {
+const webpackConfiguration = Object.assign({}, WithInstrumentation(WithStylesConfiguration(WebpackConfigProvider())), {
   externals: {
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
@@ -23,7 +24,6 @@ module.exports = function(config) {
       'karma-webpack',
       'karma-sourcemap-loader',
       'karma-jasmine',
-      'karma-mocha',
       'karma-chrome-launcher'
     ],
     webpack: webpackConfiguration,
@@ -74,9 +74,9 @@ module.exports = function(config) {
     //https://github.com/mattlewis92/karma-coverage-istanbul-reporter
     coverageIstanbulReporter: {
       // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
-      reports: ['lcov'],
+      reports: ['lcov', 'json'],
       // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
-      dir: path.join(process.cwd(),'reports', 'coverage'),
+      dir: path.join(process.cwd(), 'reports', 'unit-coverage'),
       // Combines coverage information from multiple browsers into one report rather than outputting a report
       // for each browser.
       combineBrowserReports: true,

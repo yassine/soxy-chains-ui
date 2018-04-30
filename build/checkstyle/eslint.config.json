@@ -20,11 +20,13 @@
     "quotes":["error","single"],
     "react/jsx-uses-vars": 1,
     "react/jsx-uses-react": 1,
-    "react/prop-types" : [1, {"ignore":["children"]}]
+    "react/prop-types" : [1, {"ignore":["children"]}],
+    "no-extra-boolean-cast":0
   },
   "env": {
     "browser": true,
     "node": true,
-    "jasmine": true
+    "jasmine": true,
+    "es6": true
   }
 }

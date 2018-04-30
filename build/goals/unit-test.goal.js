@@ -5,7 +5,7 @@ import projectConfig from 'project.config';
 
 import {Server} from 'karma';
 
-gulp.task('test',function(done){
+gulp.task('unit-test',function(done){
   env({
     vars:{
       CHROME_BIN:'/usr/bin/chromium-browser'

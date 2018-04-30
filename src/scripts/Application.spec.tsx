@@ -12,7 +12,7 @@ describe('Test', function () {
     jasmineEnzyme();
   });
   it('should work', function () {
-    const wrapper = mount(<Application/>);
-    expect(true).to.be.eq(true);
+    mount(<Application/>);
+    expect(true).to.eq(true);
   });
 });

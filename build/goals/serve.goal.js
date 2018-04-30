@@ -5,11 +5,11 @@ import WebpackDevServer from 'webpack-dev-server';
 import { WebpackConfigProvider } from 'webpack/webpack.config';
 import { WithStylesConfiguration } from 'webpack/styles.config';
 import { WithTools } from 'webpack/tools.config';
+import { WithStyleLint } from 'webpack/xlint.config';
 import projectConfig from 'project.config';
 
 gulp.task('serve', function () {
-  const config = WithTools(WithStylesConfiguration(WebpackConfigProvider()));
-  config.mode  = 'development';
+  const config = WithStyleLint(WithTools(WithStylesConfiguration(WebpackConfigProvider())));
   const browserSyncPlugin = new BrowserSyncPlugin(
     {
       host: 'localhost',
