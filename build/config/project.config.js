@@ -30,7 +30,7 @@ const defaultConfig = {
   themesDir       : themesDirname,
   defaultTheme    : 'dark',
   sonarqube       : {
-    serverUrl     : 'https://sonarqube.io',
+    serverUrl     : 'https://sonarcloud.io',
     'sonar.projectKey' : 'com.github.yassine:soxy-chains-ui',
     'sonar.login'      : process.env.SONAR_TOKEN,
     'sonar.javascript.lcov.reportPaths' : path.join(process.cwd(), 'reports','coverage','lcov.info'),
