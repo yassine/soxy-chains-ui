@@ -18,7 +18,7 @@ before_script:
 script:
   - gulp unit-test
   - gulp functional-test
-after_sucess:
+after_success:
   # merge coverage
   - gulp coverage
   # upload results to sonarcloud.io
