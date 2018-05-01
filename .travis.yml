@@ -7,11 +7,11 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install yarn
   - npm install -g gulp-cli webdriver-manager pm2
-  - webdriver-manager update
 install:
   - yarn install
 before_script:
-  - pm2 webdriver-manager -- start || true
+  - webdriver-manager update
+  - pm2 start webdriver-manager -- start
   # tmp debugging
   - pm2 show webdriver-manager
   - cat $HOME/.pm2/logs/webdriver-manager*.log
