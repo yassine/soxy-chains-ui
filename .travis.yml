@@ -29,6 +29,8 @@ after_script:
   - pm2 delete webdriver-manager
 node_js:
   - '8'
+addons:
+  chrome: stable
 cache:
   directories:
     - "node_modules"

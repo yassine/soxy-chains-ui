@@ -42,7 +42,7 @@ module.exports = function(config) {
           path: '/wd/hub',
           desiredCapabilities: {
             chromeOptions: {
-              args: ['--headless', '--disable-gpu'],
+              args: ['--headless', '--disable-gpu', '--no-sandbox'],
             },
             browserName: 'chrome',
           }
