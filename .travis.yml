@@ -12,9 +12,6 @@ install:
 before_script:
   - webdriver-manager update
   - pm2 start webdriver-manager -- start
-  # tmp debugging
-  - pm2 show webdriver-manager
-  - cat $HOME/.pm2/logs/webdriver-manager*.log
 script:
   - gulp unit-test
   - gulp functional-test

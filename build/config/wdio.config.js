@@ -1,7 +1,8 @@
 //http://webdriver.io/guide/testrunner/configurationfile.html
 exports.config = {
   specs: [
-    'src/**/*.functional-spec.js'
+    'test/functional-tests/*.spec.js',
+    'test/functional-tests/**/*.spec.js'
   ],
   exclude: [
   ],
@@ -45,16 +46,8 @@ exports.config = {
     const reportsDir  = path.join(process.cwd(), 'reports');
     const coverageDir = path.join(reportsDir, 'functional-coverage');
     const coverageArchive = path.join(coverageDir, 'coverage.zip');
-    try{
-      if (!fs.existsSync(reportsDir)){
-        fs.mkdirSync(reportsDir);
-      }
-      if (!fs.existsSync(coverageDir)){
-        fs.mkdirSync(coverageDir);
-      }
-    }catch (e) {
-      console.log(e)
-    }
+    require('node-mkdirs')(coverageDir);
+
     return new Promise((success, error) => {
       let req = http.get('http://localhost:9080/coverage/download', function(response) {
 
@@ -75,7 +68,5 @@ exports.config = {
         });
       });
     });
-    //fs.unlinkSync(coverageArchive);
-    //unzip the file
   }
 };

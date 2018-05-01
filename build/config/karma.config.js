@@ -1,11 +1,12 @@
 // Karma configuration
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import path from 'path';
+import projectConfig from 'project.config';
 import { WebpackConfigProvider } from 'webpack/webpack.config';
 import { WithStylesConfiguration } from 'webpack/styles.config';
 import { WithInstrumentation } from 'webpack/istanbul.config';
 
-const webpackConfiguration = Object.assign({}, WithInstrumentation(WithStylesConfiguration(WebpackConfigProvider())), {
+const webpackConfiguration = Object.assign({}, WithInstrumentation(WithStylesConfiguration(WebpackConfigProvider(projectConfig.testDir))), {
   externals: {
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
@@ -50,10 +51,10 @@ module.exports = function(config) {
       },
     },
     preprocessors: {
-      'src/**/*.spec.js' : ['webpack', 'sourcemap'],
-      'src/**/*.spec.ts' : ['webpack', 'sourcemap'],
-      'src/**/*.spec.tsx': ['webpack', 'sourcemap'],
-      'src/**/*.spec.jsx': ['webpack', 'sourcemap'],
+      'test/unit-tests/**/*.spec.js' : ['webpack', 'sourcemap'],
+      'test/unit-tests/**/*.spec.ts' : ['webpack', 'sourcemap'],
+      'test/unit-tests/**/*.spec.tsx': ['webpack', 'sourcemap'],
+      'test/unit-tests/**/*.spec.jsx': ['webpack', 'sourcemap'],
     },
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: process.cwd(),
@@ -63,10 +64,10 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/babel-polyfill/browser.js',
-      'src/**/*.spec.js',
-      'src/**/*.spec.jsx',
-      'src/**/*.spec.tsx',
-      'src/**/*.spec.ts',
+      'test/unit-tests/**/*.spec.js',
+      'test/unit-tests/**/*.spec.jsx',
+      'test/unit-tests/**/*.spec.tsx',
+      'test/unit-tests/**/*.spec.ts',
     ],
     // list of files to exclude
     exclude: [

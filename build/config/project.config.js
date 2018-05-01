@@ -5,6 +5,7 @@ import fs from 'fs';
 const root                  = process.cwd(),
       buildDirname          = path.join(root, 'build'),
       srcDirname            = path.join(root, 'src'),
+      testDirname           = path.join(root, 'test'),
       scriptsDirname        = path.join(srcDirname, 'scripts'),
       appSrcDirname         = path.join(scriptsDirname, 'app'),
       buildConfigDirname    = path.join(buildDirname, 'config'),
@@ -28,15 +29,16 @@ const defaultConfig = {
   stylesDir       : styleDirname,
   targetPath      : targetPathDirname,
   themesDir       : themesDirname,
+  testDir         : testDirname,
   defaultTheme    : 'dark',
   sonarqube       : {
     serverUrl     : 'https://sonarcloud.io',
-    'sonar.projectKey' : 'com.github.yassine:soxy-chains-ui',
-    'sonar.organization': 'yassine-github',
-    'sonar.login'      : process.env.SONAR_TOKEN,
+    'sonar.projectKey'   : 'com.github.yassine:soxy-chains-ui',
+    'sonar.organization' : 'yassine-github',
+    'sonar.login'        : process.env.SONAR_TOKEN,
     'sonar.javascript.lcov.reportPaths' : path.join(process.cwd(), 'reports','coverage','lcov.info'),
     'sonar.typescript.lcov.reportPaths' : path.join(process.cwd(), 'reports','coverage','lcov.info'),
-    'sonar.exclusions': 'src/globals.d.ts, **/node_modules/**, reports/**, build/**, **/*.spec.ts, **/*.spec.tsx, **/*.spec.js, **/*.spec.jsx, **/*.*spec.ts, **/*.*spec.tsx, **/*.*spec.js, **/*.*spec.jsx, gulpfile.babel.js',
+    'sonar.exclusions' : 'src/globals.d.ts, **/node_modules/**, reports/**, build/**, **/*.spec.ts, **/*.spec.tsx, **/*.spec.js, **/*.spec.jsx, **/*.*spec.ts, **/*.*spec.tsx, **/*.*spec.js, **/*.*spec.jsx, gulpfile.babel.js',
   }
 };
 

@@ -11,6 +11,7 @@
     "allowJs": true,
     "experimentalDecorators":true,
     "paths": {
+      "app" : ["src/scripts/app/index.ts"],
       //vendor
       "enzyme" : ["node_modules/@types/enzyme/index.d.ts"],
       "jasmine-enzyme": ["node_modules/@types/jasmine-enzyme/index.d.ts"],

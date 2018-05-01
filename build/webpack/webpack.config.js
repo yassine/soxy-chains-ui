@@ -1,5 +1,4 @@
 import config from 'project.config';
-import path from 'path';
 import webpack from 'webpack';
 
 const entries = {};
@@ -44,13 +43,13 @@ export function WebpackConfigProvider() {
 
         {
           test    : /\.ts(x?)$/,
-          include : config.srcPath,
+          include : [config.srcPath, config.testDir] ,
           exclude : [/(node_modules)/],
           use     : typeScriptLoadersProvider().slice()
         },
         {
           test    : /\.js(x?)$/,
-          include : config.srcPath,
+          include : [config.srcPath, config.testDir] ,
           exclude : [/(node_modules)/],
           use     : javaScriptLoadersProvider()
         }
@@ -66,6 +65,7 @@ export function WebpackConfigProvider() {
         '.js', '.jsx', '.ts', '.tsx', '.scss'
       ],
       modules : [
+        'test', 'test/unit-tests',
         'src', 'src/scripts/ui', 'src/scripts/app',
         'src/scripts', 'src/styles', 'build/loader',
         'node_modules'

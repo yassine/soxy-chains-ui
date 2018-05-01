@@ -62,6 +62,7 @@
     "karma-webpack": "^3.0.0",
     "loader-utils": "^1.1.0",
     "md5": "^2.2.1",
+    "node-mkdirs": "^0.0.1",
     "node-sass": "^4.9.0",
     "node-sass-json-importer": "^3.2.0",
     "sass-loader": "^7.0.1",

@@ -4,7 +4,7 @@ import unzip from 'unzip';
 import path from 'path';
 import istanbulCombine from 'istanbul-combine';
 
-gulp.task('coverage', function(){
+gulp.task('coverage', function(callback){
   const reportsDir  = path.join(process.cwd(), 'reports');
   const coverageDir = path.join(reportsDir, 'functional-coverage');
   const coverageArchive = path.join(coverageDir, 'coverage.zip');
@@ -13,20 +13,22 @@ gulp.task('coverage', function(){
       .pipe(unzip.Parse())
       .on('entry', (entry) => {
         if(entry.path === 'coverage.json'){
-          entry.pipe(fs.createWriteStream(path.join(process.cwd(), 'reports', 'functional-coverage', 'coverage.json'))).on('finish', () => {
-            istanbulCombine.sync({
-              dir : 'reports/coverage',
-              pattern : ['reports/*-coverage/coverage.json', 'reports/*-coverage/coverage*.json'],
-              print : 'summary',
-              reporters: {
-                lcov: {}
-              }
+          entry.pipe(fs.createWriteStream(path.join(process.cwd(), 'reports', 'functional-coverage', 'coverage.json')))
+            .on('finish', () => {
+              istanbulCombine.sync({
+                dir : 'reports/coverage',
+                pattern : ['reports/*-coverage/coverage.json', 'reports/*-coverage/coverage*.json'],
+                print : 'summary',
+                reporters: {
+                  lcov: {}
+                }
+              });
+              callback();
+              process.exit(0);
             });
-            ok();
-          })
         }
       }).on('error', () => {
         nok();
-      });
+      })
   });
 });
