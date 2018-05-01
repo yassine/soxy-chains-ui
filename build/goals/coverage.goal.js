@@ -20,7 +20,7 @@ gulp.task('coverage', function(){
       }).on('finish', () => {
         istanbulCombine.sync({
           dir : 'reports/coverage',
-          pattern : ['reports/**/coverage.json'],
+          pattern : ['reports/*-coverage/coverage.json', 'reports/*-coverage/coverage*.json'],
           print : 'summary',
           reporters: {
             lcov: {}
