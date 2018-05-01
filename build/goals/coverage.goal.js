@@ -13,20 +13,20 @@ gulp.task('coverage', function(){
       .pipe(unzip.Parse())
       .on('entry', (entry) => {
         if(entry.path === 'coverage.json'){
-          entry.pipe(fs.createWriteStream(path.join(process.cwd(), 'reports', 'functional-coverage', 'coverage.json')))
+          entry.pipe(fs.createWriteStream(path.join(process.cwd(), 'reports', 'functional-coverage', 'coverage.json'))).on('finish', () => {
+            istanbulCombine.sync({
+              dir : 'reports/coverage',
+              pattern : ['reports/*-coverage/coverage.json', 'reports/*-coverage/coverage*.json'],
+              print : 'summary',
+              reporters: {
+                lcov: {}
+              }
+            });
+            ok();
+          })
         }
       }).on('error', () => {
         nok();
-      }).on('finish', () => {
-        istanbulCombine.sync({
-          dir : 'reports/coverage',
-          pattern : ['reports/*-coverage/coverage.json', 'reports/*-coverage/coverage*.json'],
-          print : 'summary',
-          reporters: {
-            lcov: {}
-          }
-        });
-        ok();
       });
   });
 });

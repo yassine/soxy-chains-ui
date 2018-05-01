@@ -32,6 +32,7 @@ const defaultConfig = {
   sonarqube       : {
     serverUrl     : 'https://sonarcloud.io',
     'sonar.projectKey' : 'com.github.yassine:soxy-chains-ui',
+    'sonar.organization': 'yassine-github',
     'sonar.login'      : process.env.SONAR_TOKEN,
     'sonar.javascript.lcov.reportPaths' : path.join(process.cwd(), 'reports','coverage','lcov.info'),
     'sonar.typescript.lcov.reportPaths' : path.join(process.cwd(), 'reports','coverage','lcov.info'),
