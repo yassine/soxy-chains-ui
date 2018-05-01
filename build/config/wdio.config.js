@@ -42,21 +42,23 @@ exports.config = {
     const http = require('http');
     const fs = require('fs');
     const path = require('path');
-    const unzip = require('unzip');
     const reportsDir  = path.join(process.cwd(), 'reports');
     const coverageDir = path.join(reportsDir, 'functional-coverage');
     const coverageArchive = path.join(coverageDir, 'coverage.zip');
-    const file = fs.createWriteStream(coverageArchive);
-
-    if (!fs.existsSync(reportsDir)){
-      fs.mkdirSync(coverageDir);
+    try{
+      if (!fs.existsSync(reportsDir)){
+        fs.mkdirSync(reportsDir);
+      }
+      if (!fs.existsSync(coverageDir)){
+        fs.mkdirSync(coverageDir);
+      }
+    }catch (e) {
+      console.log(e)
     }
-    if (!fs.existsSync(coverageDir)){
-      fs.mkdirSync(coverageDir);
-    }
-
     return new Promise((success, error) => {
       let req = http.get('http://localhost:9080/coverage/download', function(response) {
+
+        const file = fs.createWriteStream(coverageArchive);
 
         const pipe = response.pipe(file);
         pipe.on('finish', () => {

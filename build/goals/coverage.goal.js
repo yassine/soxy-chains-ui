@@ -4,7 +4,7 @@ import unzip from 'unzip';
 import path from 'path';
 import istanbulCombine from 'istanbul-combine';
 
-gulp.task('coverage', function(callback){
+gulp.task('coverage', function(){
   const reportsDir  = path.join(process.cwd(), 'reports');
   const coverageDir = path.join(reportsDir, 'functional-coverage');
   const coverageArchive = path.join(coverageDir, 'coverage.zip');
@@ -20,14 +20,13 @@ gulp.task('coverage', function(callback){
       }).on('finish', () => {
         istanbulCombine.sync({
           dir : 'reports/coverage',
-          pattern : ['reports/**/coverage.json', 'reports/**/coverage-*.json'],
+          pattern : ['reports/**/coverage.json'],
           print : 'summary',
           reporters: {
-            lcov: {},
-            html: {}
+            lcov: {}
           }
         });
-        callback();
+        ok();
       });
   });
 });

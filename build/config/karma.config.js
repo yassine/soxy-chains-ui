@@ -24,9 +24,31 @@ module.exports = function(config) {
       'karma-webpack',
       'karma-sourcemap-loader',
       'karma-jasmine',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-selenium-launcher'
     ],
     webpack: webpackConfiguration,
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['chrome_driver_local'],// Chrome, Firefox, PhantomJS
+    customLaunchers: {
+      chrome_driver_local: {
+        base: 'Selenium',
+        browserName: 'chrome',
+        name: 'Karma test',
+        config : {
+          host: 'localhost',
+          port: 4444,
+          path: '/wd/hub',
+          desiredCapabilities: {
+            chromeOptions: {
+              args: ['--headless', '--disable-gpu'],
+            },
+            browserName: 'chrome',
+          }
+        }
+      },
+    },
     preprocessors: {
       'src/**/*.spec.js' : ['webpack', 'sourcemap'],
       'src/**/*.spec.ts' : ['webpack', 'sourcemap'],
@@ -65,9 +87,6 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],// Chrome, Firefox, PhantomJS
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
@@ -86,7 +105,8 @@ module.exports = function(config) {
       skipFilesWithNoCoverage: true,
       // Most reporters accept additional config options. You can pass these through the `report-config` option
       'report-config': {
-
+        'lcov': { file : 'lcov.info' },
+        'json': { file : 'coverage.json' }
       },
       // enforce percentage thresholds
       // anything under these percentages will cause karma to fail with an exit code of 1 if not running in watch mode

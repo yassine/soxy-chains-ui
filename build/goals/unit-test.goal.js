@@ -13,6 +13,6 @@ gulp.task('unit-test',function(done){
   });
   new Server({
     configFile : path.join(projectConfig.buildConfigPath, 'karma.config.js'),
-    singleRun  : true
+    singleRun  : true,
   }, done).start()
 });
