@@ -1,15 +1,17 @@
 sudo: required
 dist: trusty
 language: node_js
-before_script:
+before_install:
   - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
   - curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo \"deb https://dl.yarnpkg.com/debian/ stable main\" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update
   - sudo apt-get install yarn openjdk-8-jdk-headless
   - npm install -g gulp-cli webdriver-manager pm2
-  - yarn install
   - webdriver-manager update
+install:
+  - yarn install
+before_script:
   - pm2 webdriver-manager -- start || true
   # tmp debugging
   - pm2 show webdriver-manager
@@ -26,6 +28,8 @@ after_sucess:
   - gulp coveralls
 after_script:
   - pm2 delete webdriver-manager
+node_js:
+  - '8'
 cache:
   directories:
     - "node_modules"
