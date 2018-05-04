@@ -51,7 +51,7 @@ export function WebpackConfigProvider() {
           test    : /\.js(x?)$/,
           include : [config.srcPath, config.testDir] ,
           exclude : [/(node_modules)/],
-          use     : javaScriptLoadersProvider()
+          use     : javaScriptLoadersProvider().slice()
         }
       ]
     },

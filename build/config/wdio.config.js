@@ -1,4 +1,12 @@
 //http://webdriver.io/guide/testrunner/configurationfile.html
+const http = require('http');
+const fs   = require('fs');
+const path = require('path');
+const reportsDir  = path.join(process.cwd(), 'reports');
+const coverageDir = path.join(reportsDir, 'functional-coverage');
+const coverageArchive = path.join(coverageDir, 'coverage.zip');
+require('node-mkdirs')(coverageDir);
+
 exports.config = {
   specs: [
     'test/functional-tests/*.spec.js',
@@ -39,34 +47,22 @@ exports.config = {
     req.end();
   },
 
-  after: function () {
-    const http = require('http');
-    const fs = require('fs');
-    const path = require('path');
-    const reportsDir  = path.join(process.cwd(), 'reports');
-    const coverageDir = path.join(reportsDir, 'functional-coverage');
-    const coverageArchive = path.join(coverageDir, 'coverage.zip');
-    require('node-mkdirs')(coverageDir);
-
-    return new Promise((success, error) => {
-      let req = http.get('http://localhost:9080/coverage/download', function(response) {
-
-        const file = fs.createWriteStream(coverageArchive);
-
-        const pipe = response.pipe(file);
-        pipe.on('finish', () => {
-          file.close();
-          success();
-        });
-        response.on('data', () => {});
-        response.on('end', () => {
-          req.end();
-        });
-        response.on('error', () => {
-          req.end();
-          error();
-        });
+  after: () => new Promise((success, error) => {
+    let req = http.get('http://localhost:9080/coverage/download', function(response) {
+      const file = fs.createWriteStream(coverageArchive);
+      const pipe = response.pipe(file);
+      pipe.on('finish', () => {
+        file.close();
+        success();
+      });
+      response.on('data', () => {});
+      response.on('end', () => {
+        req.end();
+      });
+      response.on('error', () => {
+        req.end();
+        error();
       });
     });
-  }
+  })
 };
